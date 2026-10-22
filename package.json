@@ -1,0 +1,32 @@
+{
+  "name": "markdown-plantuml",
+  "version": "1.0.0",
+  "description": "A live Markdown editor and viewer with real-time PlantUML diagram rendering",
+  "type": "module",
+  "main": "index.html",
+  "scripts": {
+    "start": "serve -l 3000 .",
+    "samples:sync": "node scripts/build-sample-catalog.mjs",
+    "test": "vitest run",
+    "lint": "eslint .",
+    "check": "npm run lint && npm test"
+  },
+  "keywords": [
+    "markdown",
+    "plantuml",
+    "diagrams",
+    "svg",
+    "editor",
+    "uml"
+  ],
+  "author": "jalvinchan",
+  "license": "MIT",
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "eslint": "10.13.0",
+    "globals": "17.13.0",
+    "jsdom": "29.1.1",
+    "serve": "14.2.6",
+    "vitest": "4.1.12"
+  }
+}

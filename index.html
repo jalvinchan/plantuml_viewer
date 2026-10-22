@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Markdown + PlantUML Live Studio</title>
+  
+  <!-- Highlight.js Themes -->
+  <link rel="stylesheet" id="hljs-light-theme" href="vendor/github.min.css">
+  <link rel="stylesheet" id="hljs-dark-theme" href="vendor/github-dark.min.css" disabled>
+
+  <!-- Application Styles -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header Navbar -->
+    <header class="app-header">
+      <div class="header-brand">
+        <svg class="brand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+          <polyline points="7 15 10 9 13 15"/>
+          <polyline points="15 15 17 9 19 15"/>
+        </svg>
+        <span class="brand-title">
+          Markdown + PlantUML
+          <span class="brand-badge">Studio</span>
+        </span>
+      </div>
+
+      <div class="header-actions">
+        <!-- Sample selector -->
+        <select class="dropdown-select" id="sample-select" title="Load sample document">
+          <option value="" disabled selected>Load Sample...</option>
+        </select>
+
+        <button type="button" class="btn" id="btn-clear" title="Clear editor content">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
+          Clear
+        </button>
+
+        <button type="button" class="btn" id="btn-copy-md" title="Copy raw Markdown to clipboard">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+          Copy MD
+        </button>
+
+        <button type="button" class="btn" id="btn-copy-html" title="Copy rendered HTML to clipboard">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          Copy HTML
+        </button>
+
+        <button type="button" class="btn" id="btn-export-html" title="Download standalone HTML file">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+          Export HTML
+        </button>
+
+        <button type="button" class="btn" id="btn-export-md" title="Download Markdown file">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+          Export MD
+        </button>
+
+        <button type="button" class="btn btn-icon" id="btn-settings" title="PlantUML Server & Render Settings">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        </button>
+
+        <button type="button" class="btn btn-icon" id="btn-theme-toggle" title="Toggle Light / Dark Theme">
+          <span>🌙</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Workspace -->
+    <main class="workspace" id="workspace">
+      <!-- Editor Pane -->
+      <section class="pane pane-editor" id="pane-editor">
+        <div class="pane-header">
+          <span>Markdown Input</span>
+          <div class="pane-header-stats">
+            <span id="stat-words">0 words</span>
+            <span id="stat-chars">0 chars</span>
+          </div>
+        </div>
+        <div class="editor-wrapper">
+          <textarea
+            id="editor"
+            class="editor-textarea"
+            placeholder="Write Markdown with PlantUML diagrams here...&#10;&#10;```plantuml&#10;@startuml&#10;Alice -> Bob : Hello&#10;@enduml&#10;```"
+            spellcheck="false"
+          ></textarea>
+        </div>
+      </section>
+
+      <!-- Draggable Splitter -->
+      <div class="splitter" id="splitter" title="Drag to resize panes, double-click to center"></div>
+
+      <!-- Preview Pane -->
+      <section class="pane pane-preview" id="pane-preview">
+        <div class="pane-header">
+          <span>Live Preview</span>
+          <div class="pane-header-stats">
+            <span id="stat-diagrams">0 diagrams</span>
+          </div>
+        </div>
+        <div class="preview-scroll" id="preview-scroll">
+          <article class="markdown-body" id="preview"></article>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Lightbox Modal for Diagram Zoom & Pan -->
+  <div class="modal-overlay" id="lightbox-modal">
+    <div class="lightbox-container">
+      <div class="lightbox-header">
+        <span class="lightbox-title">PlantUML Diagram Viewer</span>
+        <div class="lightbox-controls">
+          <button type="button" class="btn btn-icon" id="lightbox-zoom-in" title="Zoom In (+)">➕</button>
+          <button type="button" class="btn btn-icon" id="lightbox-zoom-out" title="Zoom Out (-)">➖</button>
+          <button type="button" class="btn btn-icon" id="lightbox-zoom-reset" title="Reset Zoom (1:1)">1:1</button>
+          <button type="button" class="btn btn-icon" id="lightbox-zoom-fit" title="Fit to Screen">⛶ Fit</button>
+          <button type="button" class="btn btn-icon" id="lightbox-close" title="Close (Esc)">✕</button>
+        </div>
+      </div>
+      <div class="lightbox-viewport" id="lightbox-viewport">
+        <div class="lightbox-img-wrapper" id="lightbox-img-wrapper">
+          <img id="lightbox-img" src="" alt="Zoomable PlantUML diagram">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Settings Modal -->
+  <div class="modal-overlay" id="settings-modal">
+    <div class="settings-modal">
+      <div class="lightbox-header">
+        <span class="lightbox-title">PlantUML Renderer Settings</span>
+        <button type="button" class="btn btn-icon" id="settings-close">✕</button>
+      </div>
+      <div class="settings-body">
+        <div class="form-group">
+          <label class="form-label" for="select-server-preset">Render diagrams with</label>
+          <select class="dropdown-select" id="select-server-preset"></select>
+          <span class="form-help" id="server-preset-help"></span>
+        </div>
+
+        <div class="custom-server-fields" id="custom-server-fields" hidden>
+          <div class="form-group">
+            <label class="form-label" for="input-server-url">Server address</label>
+            <input type="text" class="form-input" id="input-server-url" placeholder="https://plantuml.example.com" spellcheck="false">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="select-service">Server type</label>
+            <select class="dropdown-select" id="select-service"></select>
+            <span class="form-help">A private address can run either kind of server. Kroki uses a different request format.</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="select-format">Image format</label>
+          <select class="dropdown-select" id="select-format"></select>
+        </div>
+      </div>
+      <div class="settings-footer">
+        <button type="button" class="btn" id="settings-cancel">Cancel</button>
+        <button type="button" class="btn btn-primary" id="settings-save">Save Settings</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- Vendored Core Libraries -->
+  <script src="vendor/pako.min.js"></script>
+  <script src="vendor/marked.min.js"></script>
+  <script src="vendor/purify.min.js"></script>
+  <script src="vendor/highlight.min.js"></script>
+
+  <!-- Application Logic -->
+  <script src="js/config.js"></script>
+  <script src="js/plantuml-encoder.js"></script>
+  <script src="js/renderer.js"></script>
+  <script src="js/settings.js"></script>
+  <script src="js/stats.js"></script>
+  <script src="js/export.js"></script>
+  <script src="js/samples.js"></script>
+  <script src="js/splitter.js"></script>
+  <script src="js/lightbox.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
